@@ -1,64 +1,30 @@
-import { createRouter, createWebHistory } from "vue-router";
-import Home from "./components/Home.vue";
-import About from "./components/About.vue";
-import ArticleUpdate from "./components/ArticleUpdate.vue";
-import ArticleUpdateImproved from "./components/ArticleUpdateImproved.vue";
-import ArticleCreate from "./components/ArticleCreate.vue";
-import Auth from "./components/Auth.vue";
-import Profile from "./components/Profile.vue";
-import ArticlePage from "./components/ArticlePage.vue";
-import ReadLaterTable from "./components/ReadLaterTable.vue";
-import { getAuthToken, setAuthToken } from "@/utils/auth";
-import { createPinia } from "pinia";
-
-import "./assets/main.css";
-
+// src/main.js
 import { createApp } from "vue";
 import App from "./App.vue";
+import { createPinia } from "pinia";
 
-// Initialize auth token if it exists
-const token = getAuthToken();
-if (token) {
-  setAuthToken(token);
-}
+// Import router (if you moved it inside main.js, make sure it’s correctly defined)
+import { createRouter, createWebHistory } from "vue-router";
+import Home from "@/components/Home.vue";
+import Login from "@/components/Authentication.vue";
+import Profile from "@/components/Profile.vue";
+import JobsList from "@/components/JobsList.vue";
+import JobDetail from "@/components/JobDetail.vue";
+import AdminDashBoard from "@/components/AdminDashBoard.vue";
+import FooterComponent from "@/components/Footer.vue";
 
 const routes = [
+  { path: "/", name: "Home", component: Home },
+  { path: "/login", name: "Login", component: Login },
+  { path: "/profile", name: "Profile", component: Profile },
+  { path: "/jobs", name: "JobsList", component: JobsList },
+  { path: "/jobs/:id", name: "JobDetail", component: JobDetail, props: true },
   {
-    path: "/",
-    component: Home,
+    path: "/admin/dashboard",
+    name: "AdminDashBoard",
+    component: AdminDashBoard,
   },
-  {
-    path: "/about",
-    component: About,
-  },
-  {
-    path: "/article",
-    component: ArticleCreate,
-  },
-  {
-    path: "/article/:id",
-    component: ArticlePage,
-  },
-  {
-    path: "/articles-edit/:id",
-    component: ArticleUpdate,
-  },
-  {
-    path: "/articles-improved/:id",
-    component: ArticleUpdateImproved,
-  },
-  {
-    path: "/auth",
-    component: Auth,
-  },
-  {
-    path: "/profile",
-    component: Profile,
-  },
-  {
-    path: "/read-later",
-    component: ReadLaterTable,
-  },
+  { path: "/footer", name: "FooterComponent", component: FooterComponent },
 ];
 
 const router = createRouter({
@@ -66,9 +32,12 @@ const router = createRouter({
   routes,
 });
 
-const app = createApp(App);
+// Optionally set Axios base URL if needed
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost";
 
+// Create and mount the Vue app
+const app = createApp(App);
 app.use(router);
 app.use(createPinia());
-
 app.mount("#app");

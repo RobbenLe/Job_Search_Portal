@@ -13,7 +13,7 @@ class EnvService
         $_ENV["DB_HOST"] = "mysql";
         $_ENV["DB_NAME"] = "job_portal";
         $_ENV["DB_USER"] = "root";
-        $_ENV["DB_PASSWORD"] = "password";
+        $_ENV["DB_PASSWORD"] = "secret123";
         $_ENV["DB_CHARSET"] = "utf8mb4";
         // env flag
         $_ENV["ENV"] = "LOCAL";

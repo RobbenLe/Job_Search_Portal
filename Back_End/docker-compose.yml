@@ -8,6 +8,8 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./app:/app
+      - ./app/public/uploads:/app/public/uploads
+
   php:
     build:
       context: .
@@ -15,13 +17,15 @@ services:
     working_dir: /app
     volumes:
       - ./app:/app
+      - ./app/public/uploads:/app/public/uploads
+
   mysql:
     image: mariadb:latest
     environment:
       MYSQL_ROOT_PASSWORD: secret123
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-      MYSQL_DATABASE: developmentdb
+      MYSQL_DATABASE: job_portal
     volumes:
       - mysqldata:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
